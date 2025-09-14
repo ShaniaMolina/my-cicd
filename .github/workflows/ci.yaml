@@ -26,11 +26,10 @@ jobs:
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.EC2_HOST }}
-        username: ubuntu
+        username: root
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/static-website:latest
           docker stop static-website || true
           docker rm static-website || true
           docker run -d --name static-website -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/static-website:latest
-
